@@ -38,6 +38,7 @@ Posts are fetched via `getCollection('blog')` and sorted by `pubDate` descending
 ### Pages and Routing
 
 File-based routing under `src/pages/`:
+
 - `index.astro` — home page
 - `about.astro` — about page (uses BlogPost layout with static props)
 - `blog/index.astro` — blog listing (featured first post, then grid)
@@ -53,6 +54,7 @@ File-based routing under `src/pages/`:
 ### Styling
 
 Pure CSS with CSS custom properties — no Tailwind. Design tokens are defined in `src/styles/global.css`:
+
 - `--accent`: #2337ff, `--accent-dark`: #000d8a
 - `--gray`, `--gray-light`, `--gray-dark`, `--gray-gradient`
 - Max content width: 720px; responsive breakpoint at 720px

@@ -6,6 +6,6 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://therefactoredlife.com",
-  integrations: [mdx(), sitemap()],
+	site: "https://therefactoredlife.com",
+	integrations: [mdx(), sitemap()]
 });
