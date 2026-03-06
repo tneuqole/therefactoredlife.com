@@ -9,6 +9,7 @@ pnpm dev           # Start dev server at localhost:4321
 pnpm build         # Build production site to ./dist/
 pnpm preview       # Preview production build locally
 pnpm astro check   # Type-check .astro files
+pnpm deploy        # Build and push dist/ to gh-pages branch
 ```
 
 No test or lint scripts are configured.
