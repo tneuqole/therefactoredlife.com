@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
@@ -8,75 +7,33 @@ import Header from "../components/Header.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
 
-	<body>
+	<body class="bg-stone-50 min-h-screen flex flex-col">
 		<Header />
-		<main>
+		<main class="flex-1 max-w-2xl mx-auto px-6 py-14 w-full">
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
+				<header class="mb-10 pb-8 border-b border-stone-200">
+					<FormattedDate date={pubDate} />
+					{
+						updatedDate && (
+							<p class="text-stone-400 text-xs mt-1">
+								Updated <FormattedDate date={updatedDate} />
+							</p>
+						)
+					}
+					<h1 class="text-3xl font-bold text-stone-900 mt-3 leading-tight">{title}</h1>
+					<p class="text-stone-500 mt-2 leading-relaxed">{description}</p>
+				</header>
+				<div
+					class="prose prose-stone max-w-none prose-a:text-stone-900 prose-a:no-underline hover:prose-a:underline prose-headings:text-stone-900 prose-strong:text-stone-900"
+				>
 					<slot />
 				</div>
 			</article>

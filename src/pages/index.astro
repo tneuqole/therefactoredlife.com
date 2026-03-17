@@ -1,8 +1,14 @@
 ---
+import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+const recentPosts = (await getCollection("blog"))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
 ---
 
 <!doctype html>
@@ -10,39 +16,42 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
+	<body class="bg-stone-50 min-h-screen flex flex-col">
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="flex-1 max-w-2xl mx-auto px-6 py-16 w-full">
+			<section class="mb-16">
+				<h1 class="text-2xl font-bold text-stone-900 mb-3">{SITE_TITLE}</h1>
+				<p class="text-stone-600 leading-relaxed">{SITE_DESCRIPTION}</p>
+			</section>
+
+			<section>
+				<div class="flex items-center justify-between mb-6">
+					<h2 class="text-xs font-semibold text-stone-400 uppercase tracking-widest">
+						Recent Posts
+					</h2>
+					<a
+						href="/blog"
+						class="text-xs text-stone-400 hover:text-stone-700 transition-colors no-underline"
+					>
+						All posts →
+					</a>
+				</div>
+				<ul class="divide-y divide-stone-200">
+					{
+						recentPosts.map((post) => (
+							<li class="py-6">
+								<a href={`/blog/${post.id}/`} class="group block no-underline">
+									<h3 class="text-stone-900 font-medium mb-1 group-hover:underline">
+										{post.data.title}
+									</h3>
+									<p class="text-stone-500 text-sm leading-relaxed mb-2">{post.data.description}</p>
+									<FormattedDate date={post.data.pubDate} />
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 		</main>
 		<Footer />
 	</body>
